@@ -1,0 +1,20 @@
+FROM registry.access.redhat.com/openshift3/jenkins-slave-base-rhel7:v3.11.16-3
+
+LABEL com.redhat.component="jenkins-slave-image-mgmt" \
+      name="jenkins-slave-image-mgmt" \
+      architecture="x86_64" \
+      io.k8s.display-name="Jenkins Slave Image Management" \
+      io.k8s.description="Image management tools on top of the jenkins slave base image" \
+      io.openshift.tags="openshift,jenkins,slave,copy"
+USER root
+
+ENV HTTP_PROXY='' http_proxy='' HTTPS_PROXY='' https_proxy='' NO_PROXY='' no_proxy=''
+
+RUN yum repolist > /dev/null && \
+    yum clean all && \
+    INSTALL_PKGS="skopeo" && \
+    yum install -y --enablerepo=rhel-7-server-extras-rpms --setopt=tsflags=nodocs $INSTALL_PKGS && \
+    rpm -V $INSTALL_PKGS && \
+    yum clean all
+
+USER 1001
