@@ -11,7 +11,7 @@ We extend the `jenkins-slave-base-rhel7` image and add `skopeo` CLI.
 ```
 -- one liner
 
-oc new-build -l 'role=jenkins-slave' https://github.com/eformat/openshift-skopeo-slave.git -n openshift
+oc new-build --name=jenkins-skopeo-slave -l 'role=jenkins-slave' https://github.com/eformat/openshift-skopeo-slave.git -n openshift
 
 -- build from Dockerfile
 
